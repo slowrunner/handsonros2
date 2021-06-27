@@ -206,3 +206,14 @@ while not add_two_ints.wait_for_service(timeout_sec=1.0):
 resp = add_two_ints.call_async(req)
 rclpy.spin_until_future_complete(node, resp)
 ```
+
+# ADDING DATETIME TO LOG MESSAGES
+
+```
+import datetime as dt
+
+# add_dt(str) - prepends datetime "[YYYY-MM-DD HH:MM:SS]" to str
+def add_dt(str):
+  new_str = dt.datetime.now().strftime('[%Y-%m-%d %H:%M:%S] ') + str
+  return new_str``` 
+```
