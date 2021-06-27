@@ -1,0 +1,128 @@
+ROS2 Basics (w/basic rviz2 intro)
+
+=== ROS2 CONCEPTS 
+
+- ROS PROGRAM
+1) Initialize: rclpy.init()
+2) Create one or more ROS nodes: rclpy.create_node() or instantiate a Node
+3) Process ("spin") node callbacks:  rclpy.spin()
+4) Shutdown:  rclpy.shutdown()
+
+- NO MASTER
+There is no master that needs to be started.  
+When ROS2 "spins", Nodes will discover nodes on the network with same ROS_DOMAIN_ID
+
+- BASIC UNITS 
+  - msg: messages
+  - node: an executable module responsible for a single purpose (e.g. control one motor)
+  - topic: topics are one-way labeled messages that are published and subscribed to
+  - publisher: puts topics out on network
+  - subscriber: listens for specific topics that have been broadcast on the network
+  - service: two-way (request/response) communication 
+  - service server: object that performs a service on request and sends response
+  - actions: 
+
+=== WORKSPACES and PACKAGES
+
+- Create a workspace (a folder with a src/ dir)
+mkdir -p ~/<project_name_ws>/src
+mkdir -p ~/ros2_ws/src 
+
+- Create a Python Package in a ROS2 Workspace Source Folder
+  e.g.  ~/ros2_ws/src/my_py_pkg/   <-- python package 
+        ~/ros3_ws/src/my_py_pkg/my_py_pkg/     <- source folder of the package
+        ~/ros2_ws/src/my_py_pkg/my_py_pkg/my_node.py   <-- option to create first node 
+
+  IMPORTANT: Change to the SOURCE DIR of the workspace IMPORTANT
+
+
+=== Fill out version, description, maintainer, license
+
+nano ~/ros2_ws/src/my_py_pkg/package.xml
+- <version>0.0.1</version>
+- <description>Sample Python Package With Sample Node</description>
+- <maintainer email="slowrunner@users.noreply.github">slowrunner</maintainer>
+- <license>Apache License 2.0</license>
+
+nano ~/ros2_ws/src/my_py_pkg/setup.py
+NOTE the comma at the end of lines NOTE
+-   maintainer='slowrunner',
+-   maintainer_email='slowrunner@users.noreply.github.com',
+-   description='Sample Python Package With Sample Node',
+-   license='Apache License 2.0',
+
+=== BUILD 
+
+- Check for dependancies 
+cd ~/ros2_ws
+rosdep install -i --from-path src
+
+- Build All or Build a specific package
+cd ~/ros2_ws
+colcon build [--packages-select <pkg> <pkg> ]
+
+
+
+
+=== SOURCE THE PACKAGE SETUP
+. install/setup.bash
+. install/local_setup.bash   (if ws is setup in ~/.bashrc)
+
+
+
+=== RUN IT  (NOTE: No need to start ROS master, nodes discover on the same ROS_DOMAIN_ID 
+- ros2 run my_py_pkg my_node [argv]
+
+
+
+
+
+=== VERY USEFUL COMMANDS (w/basic rviz2 intro)
+
+- colcon list - shows packages in workspace with location and type (Python or C++)
+$ colcon list
+my_py_pkg	src/my_py_pkg	(ros.ament_python)
+
+- colcon info [pkg_name] - shows dependencies
+
+- ros2 pkg list - see all visible packages
+
+- ros2 pkg executables [ pkg_name ] [--full-path] - list executables [in a package]
+  e.g.  ros2 pkg executables my_py_pkg
+        my_py_pkg my_node
+
+- ros2 pkg prefix my_py_pkg - to see install location
+  /home/ubuntu/ros2_ws/install/my_py_pkg
+
+- printenv | grep -i ROS     - to see setup from ~/.bashrc
+
+- ros2 node list           - list all running nodes
+- ros2 param list          - list all configurable parameters of a node
+- ros2 param get /my_node parm  - get value of parameter of a node
+- ros2 param set /my_node parm 25  - set value of a parameter
+- ros2 param dump /my_node - write parms of node to ./my_node.yaml
+- ros2 node info /my_node  - see info on particular node
+- ros2 topic list          - list current topics being published
+- ros2 topic info /my_top  - show info on particular topic
+- ros2 topic echo /my_top  - subscribe to a topic and print each msg in the terminal
+- ros2 topic pub [--once] /my_top std_msgs/msg/Int32 '{data: 5}' - publish a value to topic e.g. '{a: 1, b: 2}'
+- ros2 service list [-t]   - list current services running (alt:  ros2 srv list )
+- ros2 srv show <my_service>
+- ros3 srv call <service> <interface> <data>
+  e.g.  ros2 srv call /add_two_ints example_interfaces/srv/AddTwoInts '{a: 1, b: 2}'
+- ros2 run my_pkg entrypoint  - run a ROS executable
+- ros2 run my_pkg my_node --ros-args --params-file ./my_node.yaml
+- ros2 launch <packag_name> <launch_file>
+  e.g.  ros2 launch dummy_robot_bringup dummy_robot_bringup.launch.py
+- rviz2
+  (See https://industrial-training-master.readthedocs.io/en/melodic/_source/session7/ROS2-Basics.html#ros2-launch)
+  1) T1: ros2 launch dummy_robot_bringup dummy_robot_bringup.launch.py
+  2) T2: rviz2
+  3) Under Displays -> Global Options -> Fixed Frame, click on map, change to world
+  4) At bottom-left click Add, [scroll], select RobotModel, OK
+  5) Expand RobotModel, Click next to Description Topic, select /robot_description, <enter>
+  6) At bottom-left click Add, [scroll], select LaserScan
+  7) Expand LaserScan, click next to Topic, select /scan, <enter>
+
+
+
