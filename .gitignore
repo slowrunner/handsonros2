@@ -1,3 +1,9 @@
+# my ignores
+log/
+install/
+COLCON_IGNORE
+
+# Github ROS Ignores
 devel/
 logs/
 build/
