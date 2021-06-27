@@ -216,4 +216,12 @@ import datetime as dt
 def add_dt(str):
   new_str = dt.datetime.now().strftime('[%Y-%m-%d %H:%M:%S] ') + str
   return new_str``` 
+
+
+[INFO] [1624812324.155095487] [log_w_dt]: [2021-06-27 12:45:24] Created log_w_dt node
+[INFO] [1624812324.646024785] [log_w_dt]: [2021-06-27 12:45:24] Publishing: 0
+[INFO] [1624812325.146772983] [log_w_dt]: [2021-06-27 12:45:25] Publishing: 1  
+...  
+^C[INFO] [1624812327.262942489] [log_w_dt]: [2021-06-27 12:45:27] control-c: log_w_dt shutting down
+
 ```
