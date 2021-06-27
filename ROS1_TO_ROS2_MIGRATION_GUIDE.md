@@ -114,6 +114,9 @@ def main(args=None):
         rclpy.spin(my_node)       # execute simple_node 
     except KeyboardInterrupt:
         my_node.get_logger().info('\ncontrol-c: shutting down')
+    except BaseException:
+        print('exception in server:', file=sys.stderr)
+        raise
     finally:
         # Destroy the node explicitly
         # (optional - otherwise it will be done automatically
