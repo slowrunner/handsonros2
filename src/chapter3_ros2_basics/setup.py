@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='slowrunner',
     maintainer_email='slowrunner@users.noreply.github.com',
-    description='Use ROS2 Tutorial Minimal Publisher-Subscriber Python Tutorial',
+    description='Migration using ROS2 Tutorial "Writing a simple publisher and subscriber (Python)"',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={
@@ -26,6 +26,7 @@ setup(
             'topic_sub = chapter3_ros2_basics.topic_subscriber:main',
             'topic_pub_node = chapter3_ros2_basics.topic_pub_node:main',
             'topic_sub_node = chapter3_ros2_basics.topic_sub_node:main',
+            'doubler = chapter3_ros2_basics.doubler:main',
         ],
     },
 )

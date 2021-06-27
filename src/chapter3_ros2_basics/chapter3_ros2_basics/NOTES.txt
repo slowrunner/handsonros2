@@ -1,0 +1,162 @@
+NOTES for Hands On ROS "Chapter3: ROS Basics"
+
+BOOK: "Hands-On ROS for Robotics Programming", Bernardo Ronquillo Japon, Packt Publishing
+
+Originals: https://github.com/PacktPublishing/Hands-On-ROS-for-Robotics-Programming/tree/master/Chapter3_ROS_basics
+
+NOTE: "ROS2 Migration" 
+- is one-to-one rospy-to-rclpy conversion
+  with addition of a thread to execute rclpy.spin()  
+  which is needed in ROS2 to make callbacks and rate.sleep() happen
+  
+"Pythonic ROS2 Migration"
+- involves reorganization into a Class with main()
+  of the one-to-one rospy-to-rclpy conversions
+
+FILES Created:
+- doubler.py: "Pythonic" ROS2 version of original
+- __init__.py: ROS2 ament_python auto generated file
+- publisher_member_function.py:  
+  From ROS2 Tutorial: https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html
+- subscriber_member_function.py
+- topic_publisher.py: "ROS2 Migration" of original
+- topic_pub_node.py: "Pythonic" ROS2 version of original
+- topic_sub_node.py: "Pythonic" ROS2 version of original
+- topic_subscriber.py: "ROS2 Migration" of original
+
+
+
+
+
+kindle loc 1680: Creating a workspace
+  $ mkdir -p ~/handsonros2/src
+  $ cd ~/handsonros2 
+* ignore catkin_init_workspace
+* instead of catkin_make
+  $ colcon build
+* instead of steps 4,5,6 
+- add the following at the end of ~/.bashrc
+
+source /opt/ros/foxy/setup.bash
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=~/ros2_install
+export ROS_DOMAIN_ID=0
+
+
+== Setting up the ROS package
+See https://docs.ros.org/en/foxy/Tutorials/Writing-A-Simple-Py-Publisher-And-Subscriber.html
+cd ~/handsonros2/src
+
+* Create the ROS2 package and Python package  (convention pkg names all lower case)
+ros2 pkg create --build-type ament_python chapter3_ros2_basics
+
+* Bring down ROS2 tutorial minimal publisher
+cd chapter3_ros2_basics/chapter3_ros2_basics
+
+wget https://raw.githubusercontent.com/ros2/examples/foxy/rclpy/topics/minimal_publisher/examples_rclpy_minimal_publisher/publisher_member_function.py
+
+* look at the code in publisher_member_function.py
+- rclpy is ROS Client Library for Python with stock Python objects
+- std_msgs contains the definitions for all ROS messages
+- MinimalPublisher is our Node class 
+- init creates the node's publisher, a timer, and a node variable i for a counter
+- timer_callback creates a message publishes it, logs the event, and increments the class var i
+- main() initializes the ROS Client Library For Python, instantiates the publisher node,
+  and "spins" the node so its timer_callbacks will get called, and handles node shutdown
+
+* Bring down the ROS2 Tutorial subscriber 
+
+wget https://raw.githubusercontent.com/ros2/examples/foxy/rclpy/topics/minimal_subscriber/examples_rclpy_minimal_subscriber/subscriber_member_function.py
+
+* Examine the code in subscriber_member_function.py
+- mirrors the publisher code
+- creates subscriber and listener callback
+- no timer needed, acts when "topic" is received from publisher
+
+* Add dependencies
+cd ..
+nano package.xml  (edit desc, maintainer, license, and add exec_dependancies)
+  <description>Migration using ROS2 Tutorial "Writing a simple publisher and subscriber (Python)"</description>
+  <maintainer email="slowrunner@users.noreply.github.com">slowrunner</maintainer>
+  <license>Apache License 2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+* Add entry point
+nano setup.py (again edit desc, maintainer, license and add the entry_points)
+
+    entry_points={
+        'console_scripts': [
+            'talker = chapter3_ros2_basics.publisher_member_function:main',
+            'listener = chapter3_ros2_basics.subscriber_member_function:main',
+        ],
+    },
+
+* Check setup.cfg (tells setuptools to put executables in lib where ros2 run will look for them
+[develop]
+script-dir=$base/lib/chapter3_ros2_basics
+[install]
+install-scripts=$base/lib/chapter3_ros2_basics
+
+
+* run rosdep (in root of workspace) to check for missing dependencies before building
+cd ~/handsonros2
+rosdep install -i --from-path src
+
+* still in root of ws, build new package
+colcon build [--packages-select chapter3_ros2_basics]
+
+* source setup files
+. install/setup.bash
+
+
+* Run talker
+ros2 run chapter3_ros2_basics talker
+
+* Run Listener in another window
+. install/bash.sh
+ros2 run chapter3_ros2_basics listener
+
+* CNTRL-C in both windows to stop
+
+==== Now migrate/convert the Hands-On-ROS-For-Robotics-Programming/Chapter3_ROS_basics ROS version to ROS2
+
+cd ~/handsonros2/src/chapter3_ros2_basics/chapter3_ros2_basics
+cp ~/Hands-On-ROS-for-Robotics-Programming/Chapter3_ROS_basics/*.py .
+
+
+- Use https://docs.ros.org/en/rolling/Contributing/Migration-Guide-Python.html to migrate topic_publisher.py
+- Spinning based on https://answers.ros.org/question/358343/rate-and-sleep-function-in-rclpy-library-for-ros2/?answer=358386#post-id-358386
+- For "Pythonic ROS2 Migration" see https://raw.githubusercontent.com/ros2/examples/foxy/rclpy/topics/minimal_publisher/examples_rclpy_minimal_publisher/publisher_member_function.py
+
+
+ENTRY POINTS in setup.py: 
+- (ros2 run chapter3_ros2_basics <entry_point>)
+
+            'talker = chapter3_ros2_basics.publisher_member_function:main',
+            'listener = chapter3_ros2_basics.subscriber_member_function:main',
+            'topic_pub = chapter3_ros2_basics.topic_publisher:main',
+            'topic_sub = chapter3_ros2_basics.topic_subscriber:main',
+            'topic_pub_node = chapter3_ros2_basics.topic_pub_node:main',
+            'topic_sub_node = chapter3_ros2_basics.topic_sub_node:main',
+
+=== RUNNING DOUBLER
+T1: cd ~/handsonros2  
+    colcon build  
+    . install/setup.bash  (in every new terminal)
+    ros2 run chapter3_ros2_basics doubler
+
+T2: ros2 topic list -t
+/doubled [std_msgs/msg/Int32]
+/number [std_msgs/msg/Int32]
+/parameter_events [rcl_interfaces/msg/ParameterEvent]
+/rosout [rcl_interfaces/msg/Log]
+
+T2: ros2 topic echo doubled
+T3: ros2 topic pub --once number std_msgs/Int32 '{data: 2}' 
+
+
+
+
+

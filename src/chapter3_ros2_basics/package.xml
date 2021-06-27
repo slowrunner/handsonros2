@@ -3,7 +3,7 @@
 <package format="3">
   <name>chapter3_ros2_basics</name>
   <version>0.0.0</version>
-  <description>Use ROS2 Tutorial Minimal Publisher-Subscriber Python Tutorial</description>
+  <description>Migration using ROS2 Tutorial "Writing a simple publisher and subscriber (Python)"</description>
   <maintainer email="slowrunner@users.noreply.github.com">slowrunner</maintainer>
   <license>Apache License 2.0</license>
 
