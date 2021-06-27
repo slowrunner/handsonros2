@@ -27,6 +27,7 @@ setup(
             'topic_pub_node = chapter3_ros2_basics.topic_pub_node:main',
             'topic_sub_node = chapter3_ros2_basics.topic_sub_node:main',
             'doubler = chapter3_ros2_basics.doubler:main',
+            'log_w_dt  = chapter3_ros2_basics.log_w_dt:main',
         ],
     },
 )
