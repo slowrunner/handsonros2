@@ -1,6 +1,7 @@
 # my ignores
 log/
 install/
+my_logs/
 COLCON_IGNORE
 
 # Github ROS Ignores
