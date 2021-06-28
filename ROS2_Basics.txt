@@ -128,17 +128,16 @@ my_py_pkg	src/my_py_pkg	(ros.ament_python)
 
 === LOG FILES TO LOG DIRECTORY
 
-export ROS_LOG_DIR=~/handsonros2/my_logs
-in a terminal, 
-or create file: ~/handsonros2/.bashrc 
-or create file: ~/handsonros2/set_logdir.sh
+In a terminal window: export ROS_LOG_DIR=~/handsonros2/my_logs
+or
+create file: ~/handsonros2/set_logdir.sh
 
 #!/bin/bash
 export ROS_LOG_DIR=~/handsonros2/my_logs
+bash
+
 
 cd handsonros2
-source .bashrc
-or 
 ./set_logdir.sh
 
 or if only one ROS2 workspace, put the export in ~/.bashrc
