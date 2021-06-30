@@ -1,0 +1,57 @@
+Hands On ROS Chapter 4 Notes
+
+FILE:  /Volumes/Samsung_T5/PiStuff/ROSbot/HandsOnROS/HandsOnROS_Chap4_Notes.txt
+
+BOOK: "Hands-On ROS for Robotics Programming", Bernardo R. Japon, Packt Publishing, 2020
+
+
+- Created ROS2 versions of: (by: ros2 pkg create rviz2_basics in ros2tuts/src)
+  - package.xml  
+  - CMakeLists.txt
+
+- Added dependencies to ros2package.xml 
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+
+- Added launch files installation in the ros2CMakeLists.txt
+
+```
+# (Always add before ament_package() line)
+# Install launch files
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+
+# Install urdf files
+install(DIRECTORY
+  urdf
+  DESTINATION share/${PROJECT_NAME}/
+
+
+```
+
+- Create launch/ros2_gpgMin_rviz2_simple.launch
+
+- run rosdep install -i --from-path src (in ~/handsonros2)
+- colcon build
+- ros2 launch rviz2_basics ros2_gpgMin_rviz2_simple.launch
+
+
+- rviz2 -d ~/handsonros2/src/chap4_rviz_basics/rviz/gpgMin.rviz2.rviz
+
+=== Loading the simple URDF
+T2: rviz2
+- Add->ROBOT MODEL
+  Description Source: File
+  Description File:  ~/handsonros2/src/chap4_rviz2_basics/
+
+
+=== ROS2 DUMMY ROBOT DEMO
+
+T1: . install/setup.bash
+T1: ros2 launch dummy_robot_bringup dummy_robot_bringup.launch
+
+T2: rviz2
+
+
+
