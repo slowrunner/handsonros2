@@ -33,9 +33,14 @@ if(BUILD_TESTING)
 endif()
 
 # (Always add before ament_package() line)
-# Install launch fils
+# Install launch files
 install(DIRECTORY
   launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+# Install urdf files
+install(DIRECTORY
+  urdf
   DESTINATION share/${PROJECT_NAME}/
 )
 
