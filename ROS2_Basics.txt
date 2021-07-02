@@ -94,6 +94,8 @@ my_py_pkg	src/my_py_pkg	(ros.ament_python)
 - ros2 pkg prefix my_py_pkg - to see install location
   /home/ubuntu/ros2_ws/install/my_py_pkg
 
+- ros2 pkg list  - to see all ros2 pkgs installed
+
 - printenv | grep -i ROS     - to see setup from ~/.bashrc
 
 - ros2 node list           - list all running nodes
