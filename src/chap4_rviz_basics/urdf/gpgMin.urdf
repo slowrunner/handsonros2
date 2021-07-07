@@ -1,14 +1,15 @@
 <?xml version='1.0'?>
-<robot name="gpgMin">
 
 <!-- FILE: gpgMin.urdf -->
 
 <!-- maintainer: slowrunner@users.noreply.github.com -->
 
 <!-- GoPiGo3 as a 220mm long,  104mm wide, 70mm high enclosing box (blue) -->
-<!--   with a 3/4 inch castor holding the chassis level (blue)
+<!--   with a 3/4 inch castor holding the chassis level (blue) -->
 <!--   with 65mm dia 25mm wide wheels (black) spaced 116mm (Wheel base) apart -->
 <!--   The wheels are 20mm forward of the chassis center -->
+
+<robot name="gpgMin">
 
   <!-- Base Link -->
   <link name="base_link">

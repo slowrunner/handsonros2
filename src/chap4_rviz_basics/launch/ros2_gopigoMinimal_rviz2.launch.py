@@ -8,7 +8,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    urdf_file_name = "gpgMin.urdf"
+    urdf_file_name = "gopigoMinimal.urdf"
     urdf = os.path.join(
         get_package_share_directory('rviz2_basics'),'urdf',
         urdf_file_name)
@@ -21,6 +21,16 @@ def generate_launch_description():
             'use_sim_time',
             default_value='false',
             description='Use sim (Gazebo) clock when True'),
+        DeclareLaunchArgument(
+            'use_gui',
+            default_value='true',
+            description='True causes joint_state_publisher to launch joint_state_publisher_gui'),
+        DeclareLaunchArgument(
+            'model',
+            default_value='gopigoMinimal',
+            description='Only visual and links'),
+
+
         #     'node_prefix',
         #     default_value=[launch.substitutions.EnvironmentVariable('USER'), '_'],
         #     description='Prefix for node names'),
@@ -32,18 +42,23 @@ def generate_launch_description():
             parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc}],
             arguments=[urdf]),
             # name=[launch.substitutions.LaunchConfiguration('node_prefix'), '']),
+
+        # Note in ROS2 passing use_gui to joint_state_publisher will attempt
+        # to launcdh joint_state_publisher_gui (if installed)
+        # (put joint_state_publisher_gui in an exec_depend in package.xml and 
+        # run rosdep install -i --from-path src in the workspace root)
         Node(
             package='joint_state_publisher',
             executable='joint_state_publisher',
             name='joint_state_publisher',
             output='screen',
-            parameters=[{'/use_gui': True}],
+            parameters=[],
             arguments=[urdf]),
             # name=[launch.substitutions.LaunchConfiguration('node_prefix'), '']),
-        # Node(
-        #     package='rviz2',
-        #     executable='rviz2',
-        #     name='rviz2',
-        #     args="-d get_package_share_directory('rviz_basics')/rviz/gpgMin.rviz2.rviz",
-        #     output='screen'),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments="-d get_package_share_directory('rviz2_basics')/rviz/$(arg model).rviz2",
+            output='screen'),
     ])

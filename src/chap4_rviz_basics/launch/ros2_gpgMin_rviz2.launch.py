@@ -22,7 +22,7 @@ def generate_launch_description():
             default_value='false',
             description='Use sim (Gazebo) clock when True'),
         DeclareLaunchArgument(
-            'use_gui',
+            'gui',
             default_value='true',
             description='True causes joint_state_publisher to launch joint_state_publisher_gui'),
         DeclareLaunchArgument(
@@ -48,8 +48,8 @@ def generate_launch_description():
         # (put joint_state_publisher_gui in an exec_depend in package.xml and 
         # run rosdep install -i --from-path src in the workspace root)
         Node(
-            package='joint_state_publisher',
-            executable='joint_state_publisher',
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
             name='joint_state_publisher',
             output='screen',
             parameters=[],
@@ -59,6 +59,7 @@ def generate_launch_description():
             package='rviz2',
             executable='rviz2',
             name='rviz2',
+            parameters=[],
             arguments="-d get_package_share_directory('rviz2_basics')/rviz/$(arg model).rviz2",
             output='screen'),
     ])
