@@ -4,7 +4,15 @@ FILE:  /Volumes/Samsung_T5/PiStuff/ROSbot/HandsOnROS/HandsOnROS_Chap4_Notes.txt
 
 BOOK: "Hands-On ROS for Robotics Programming", Bernardo R. Japon, Packt Publishing, 2020
 
+SUMMARY OF CHAPTER 4 MIGRATION:
+- ROS2 has made launch files quite complex turning a 10 line XML file into 60 lines of python
+- ROS2 has made ROS1 launch arguments and parameters difficult or impossible 
+- ROS2 joint_state_publisher no longer supports use_gui parameter, use joint_state_publisher_gui
+- Made separate launch files rather than passing args and parms
+- Created gpgMin.pdf which more closely models GoPiGo3 body, caster and wheel sizes and positions 
 
+
+STEPS: 
 - Created ROS2 versions of: (by: ros2 pkg create rviz2_basics in ros2tuts/src)
   - package.xml  
   - CMakeLists.txt
@@ -34,10 +42,13 @@ install(DIRECTORY
 
 - run rosdep install -i --from-path src (in ~/handsonros2)
 - colcon build
-- ros2 launch rviz2_basics ros2_gpgMin_rviz2_simple.launch
-
-
-- rviz2 -d ~/handsonros2/src/chap4_rviz_basics/rviz/gpgMin.rviz2.rviz
+- source install/setup.bash
+- ros2 launch rviz2_basics ros2_gpgMin_rviz2_simple.launch.py
+- ros2 launch rviz2_basics ros2_gpgMin_rviz2.launch.py 
+- ros2 launch rviz2_basics ros2_gopigoMinimal_rviz2_simple.launch.py
+or
+- T1: ros2 launch rviz2_basics ros2_state_and_joint.launch.py
+- T2: rviz2 -d ~/handsonros2/src/chap4_rviz_basics/rviz/gpgMin.rviz2.rviz
 
 === Loading the simple URDF
 T2: rviz2
@@ -54,4 +65,22 @@ T1: ros2 launch dummy_robot_bringup dummy_robot_bringup.launch
 T2: rviz2
 
 
+=== TRY ROS1 to ROS2 LAUNCH MIGRATOR
 
+* Bring down the migrator
+
+cd ~
+git clone https://github.com/aws-robotics/ros2-launch-file-migrator.git
+
+* Install It
+cd ros2-launch-file-migrator
+pip3 install -e ./ --user
+
+
+* Try it
+cd launch dir of ros1.launch file
+~/.local/bin/migrate_launch_file ros1_gopigoMinimal_rviz.launch.donotuse
+Converting file ros1_gopigoMinimal_rviz.launch.donotuse to ros1_gopigoMinimal_rviz.launch.donotuse.py
+
+ros2 launch rviz2_basics ros2_from_ros1_gopigoMinimal_rviz.launch.py
+--  ERROR because robot_description parameter not converted
