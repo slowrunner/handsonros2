@@ -5,20 +5,22 @@ The files in this folder provide the code samples for "Chapter 4: Creating the v
 ROS2 Versions of Chapter 4 of Hands-On-ROS-For-Robotics-Programming
 plus a gpgMin.urdf that more closely matches the body, castor, and wheel sizes and positions
 
-To build rviz2_basics package:
-$ rosdep install -i --from-path src    (installs robot_state_publisher, joint_state_publisher, joint_state_publisher_gui)
-$ colcon build --packages-selelect rviz2_basics
-$ source install/setup.bash
+To build rviz2_basics package:  
+$ rosdep install -i --from-path src    (installs robot_state_publisher, joint_state_publisher, joint_state_publisher_gui)  
+$ colcon build --packages-selelect rviz2_basics  
+$ source install/setup.bash  
 
-To run robot_state_publisher and joint_state_publisher:
-T1: ros2 launch rviz2_basics ros2_state_and_joint.launch.py
-T2: rviz2 -d ~/handsonros2/src/chap4_rviz_basics/rviz/gpgMin.rviz2.rviz
+To run robot_state_publisher and joint_state_publisher:  
+T1: ros2 launch rviz2_basics ros2_state_and_joint.launch.py  
+T2: rviz2 -d ~/handsonros2/src/chap4_rviz_basics/rviz/gpgMin.rviz2.rviz  
 
-or to additionally launch rviz2
+or to additionally launch rviz2  
 
-ros2 launch rviz2_basics ros2_gpgMin_rviz2_simple.launch.py
-or
-ros2 launch rviz2_basics ros2_gopigoMinimal_rviz2_simple.launch.py
+ros2 launch rviz2_basics ros2_gpgMin_rviz2_simple.launch.py  
+
+or  
+
+ros2 launch rviz2_basics ros2_gopigoMinimal_rviz2_simple.launch.py  
 
 
 Basis:
