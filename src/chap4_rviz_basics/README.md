@@ -35,4 +35,4 @@ Basis:
 - launch/ros2_gpgMin_rviz2.launch.py:                 failed attempt passing args and use_gui parm for joint_state_publisher
 - launch/ros2_state_and_joint.launch.py:              only launch state and joint publishers, no rviz2
 
-![gpgMin.urdf in rviz2](/Graphics/Chap4_rviz2_basics_gpgMin.urdf.jpg?raw=true)
+![gpgMin.urdf in rviz2](Chap4_rviz2_basics_gpgMin.urdf.jpg?raw=true)
