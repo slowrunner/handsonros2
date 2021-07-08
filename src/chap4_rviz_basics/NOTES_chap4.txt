@@ -10,7 +10,7 @@ SUMMARY OF CHAPTER 4 MIGRATION:
 - ROS2 joint_state_publisher no longer supports use_gui parameter, use joint_state_publisher_gui
 - Made separate launch files rather than passing args and parms
 - Created gpgMin.pdf which more closely models GoPiGo3 body, caster and wheel sizes and positions 
-
+- rqt_tf_tree is not available for ROS2 at this time
 
 STEPS: 
 - Created ROS2 versions of: (by: ros2 pkg create rviz2_basics in ros2tuts/src)

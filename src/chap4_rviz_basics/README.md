@@ -5,6 +5,16 @@ The files in this folder provide the code samples for "Chapter 4: Creating the v
 ROS2 Versions of Chapter 4 of Hands-On-ROS-For-Robotics-Programming
 plus a gpgMin.urdf that more closely matches the body, castor, and wheel sizes and positions
 
+SUMMARY OF CHAPTER 4 MIGRATION:  
+- ROS2 has made launch files quite complex turning a 10 line XML file into 60 lines of python  
+- ROS2 has made ROS1 launch arguments and parameters difficult or impossible  
+- ROS2 joint_state_publisher no longer supports use_gui parameter, use joint_state_publisher_gui  
+- Made separate launch files rather than passing args and parms  
+- Created gpgMin.pdf which more closely models GoPiGo3 body, caster and wheel sizes and positions  
+- rqt_tf_tree is not available for ROS2 at this time  
+
+
+
 To build rviz2_basics package:  
 $ rosdep install -i --from-path src    (installs robot_state_publisher, joint_state_publisher, joint_state_publisher_gui)  
 $ colcon build --packages-selelect rviz2_basics  
