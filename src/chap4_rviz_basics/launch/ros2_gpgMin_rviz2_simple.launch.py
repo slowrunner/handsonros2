@@ -39,6 +39,6 @@ def generate_launch_description():
              package='rviz2',
              executable='rviz2',
              name='rviz2',
-             args="-d get_package_share_directory('rviz2_basics')/rviz/gpgMin.rviz",
+             arguments="-d get_package_share_directory('rviz2_basics')/rviz/gpgMin.rviz",
              output='screen'),
     ])
