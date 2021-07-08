@@ -21,9 +21,6 @@ def generate_launch_description():
             'use_sim_time',
             default_value='false',
             description='Use sim (Gazebo) clock when True'),
-        #     'node_prefix',
-        #     default_value=[launch.substitutions.EnvironmentVariable('USER'), '_'],
-        #     description='Prefix for node names'),
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -31,19 +28,17 @@ def generate_launch_description():
             output='screen',
             parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc}],
             arguments=[urdf]),
-            # name=[launch.substitutions.LaunchConfiguration('node_prefix'), '']),
         Node(
-            package='joint_state_publisher',
-            executable='joint_state_publisher',
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
             name='joint_state_publisher',
             output='screen',
-            parameters=[{'/use_gui': True}],
+            parameters=[],
             arguments=[urdf]),
-            # name=[launch.substitutions.LaunchConfiguration('node_prefix'), '']),
-        # Node(
-        #     package='rviz2',
-        #     executable='rviz2',
-        #     name='rviz2',
-        #     args="-d get_package_share_directory('rviz_basics')/rviz/gpgMin.rviz2.rviz",
-        #     output='screen'),
+        Node(
+             package='rviz2',
+             executable='rviz2',
+             name='rviz2',
+             args="-d get_package_share_directory('rviz2_basics')/rviz/gpgMin.rviz",
+             output='screen'),
     ])
