@@ -1,0 +1,27 @@
+Hands On ROS Chapter 5 Notes
+
+FILE:  /Volumes/Samsung_T5/PiStuff/ROSbot/HandsOnROS/HandsOnROS_Chap5_Notes.txt
+
+BOOK: "Hands-On ROS for Robotics Programming", Bernardo R. Japon, Packt Publishing, 2020
+
+SUMMARY OF CHAPTER 5 MIGRATION:
+- 
+
+
+STEPS: 
+- added to CMakeLists.txt
+
+```
+# Install worlds files
+install(DIRECTORY
+  worlds
+  DESTINATION share/${PROJECT_NAME}/
+
+```
+
+
+- run rosdep install -i --from-path src (in ~/handsonros2)
+- colcon build
+- source install/setup.bash
+- ?
+
