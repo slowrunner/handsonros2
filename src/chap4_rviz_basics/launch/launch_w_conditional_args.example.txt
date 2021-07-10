@@ -1,0 +1,81 @@
+# Example Launch File With Conditional Arguments  
+
+See: https://answers.ros.org/question/382000/ros2-makes-launch-files-crazy-too-soon-to-be-migrating/?answer=382141#post-id-382141
+
+Would need Galactic for ParameterValue()
+
+
+#!/usr/bin/env python3
+
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
+from launch.conditions import IfCondition, UnlessCondition
+from launch_ros.actions import Node
+from launch_ros.descriptions import ParameterValue # Need master or Galactic branch for this feature
+from launch_ros.substitutions import FindPackageShare
+import os
+
+def generate_launch_description():
+  this_pkg = FindPackageShare('rviz2_basics')
+
+  model = LaunchConfiguration('model')
+  params_path = LaunchConfiguration('params_path')
+  use_sim_time = LaunchConfiguration('use_sim_time')
+  use_gui = LaunchConfiguration('use_gui')
+
+  
+
+  return LaunchDescription([
+    DeclareLaunchArgument(
+      'model',
+      # something like this to join package share directory of rviz2_basics /urdf/model.urdf
+      default_value=PathJoinSubstitution([this_pkg, model,'gogpigoMinimal']),
+      description='urdf filename without extension'
+    ),
+
+    DeclareLaunchArgument(
+      'params_path',
+      default_value=PathJoinSubstitution([this_pkg,'params','test_rig_model.yaml']),
+      description='Full path to parameter yaml file including filename and extension'
+    ),
+
+    DeclareLaunchArgument(
+      'use_sim_time',
+      default_value='false',
+      description='Use sim (Gazebo) clock when True'
+    ),
+
+    DeclareLaunchArgument(
+      'use_gui',
+      default_value='True',
+      description='True causes joint_state_publisher to launch joint_state_publisher_gui'
+    ),
+
+    Node(
+      package='robot_state_publisher',
+      executable='robot_state_publisher',
+      name='robot_state_publisher',
+      output='screen',
+      parameters=[{
+        'robot_description': ParameterValue(Command(['cat ',model_path,]), value_type=str)
+      }],
+    ),
+
+    Node(
+      package='joint_state_publisher_gui',
+      executable='joint_state_publisher_gui',
+      name='joint_state_publisher',
+      output='screen',
+      condition=IfCondition(use_gui)
+    ),
+
+    Node(
+      package='joint_state_publisher',
+      executable='joint_state_publisher',
+      name='joint_state_publisher',
+      output='screen',
+      condition=UnlessCondition(use_gui)
+    )
+
+  ])
