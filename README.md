@@ -26,10 +26,11 @@ and when done:
 ./killit.sh
 ```
 
-- On Desktop PC (launch Rviz2 and needed publishers)
-T1: 
-cd ~/handsonros2
-./launch_rviz2_w_joint_and_robot_pubs.sh
+- On Desktop PC (launch Rviz2 and needed publishers):  
+```
+T1:  
+cd ~/handsonros2  
+./launch_rviz2_w_joint_and_robot_pubs.sh  
 ```
 
 # Drive ROSbot Dave
@@ -41,6 +42,7 @@ On Desktop PC T2:
 rqt
    plugins->Robot Steering
 ```
+
 - Using teleop_twist_keyboard (installed on ROSbot Dave):
 ```
 From 2nd ssh session to ROSbot Dave:
