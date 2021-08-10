@@ -9,4 +9,4 @@
 
 cd ~/handsonros2
 source ~/handsonros2/install/setup.bash
-ros2 launch rviz2_basics ros2_gpgMin_rviz2.launch.py
+ros2 launch rviz2_basics ros2_dave_rviz2.launch.py
