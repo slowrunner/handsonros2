@@ -14,9 +14,9 @@
   <!-- Base Link -->
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="0 0 0.072" rpy="0 0 0" />
       <geometry>
-          <box size="0.22 0.104 0.070"/>
+          <box size="0.22 0.104 0.052"/>
       </geometry>
       <material name="blue">
         <color rgba="0 0.5 1 0.5"/>
@@ -25,12 +25,52 @@
 
     <!-- Caster -->
     <visual name="caster">
-      <origin xyz="-0.1 0 -0.0575" rpy="0 0 0" />
+      <origin xyz="-0.1 0 0.01" rpy="0 0 0" />
       <geometry>
         <sphere radius="0.01" />
       </geometry>
     </visual>
+
+    <!-- Caster Support -->
+    <visual name="castor_support">
+      <origin xyz="-0.1 0.0 0.032" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.055 0.026" />
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    
+    <!-- Servo 1 Body -->
+    <visual>
+        <origin xyz="0.100 0.010 0.1125" rpy="0 0 0" />
+        <geometry>
+          <box size="0.020 0.040 0.025" />
+        </geometry>
+        <material name="blue" />
+    </visual>
+
+    <!-- Level 2 to 3 -->
+    <visual>
+        <origin xyz="0.0175 0 0.121" rpy="0 0 0" />
+        <geometry>
+          <box size="0.125 0.104 0.050" />
+        </geometry>
+        <material name="blue" />
+    </visual>
+
+    <!-- Level 3 to 4 -->
+    <visual>
+        <origin xyz="0.0175 0 0.185" rpy="0 0 0" />
+        <geometry>
+          <box size="0.125 0.104 0.075" />
+        </geometry>
+        <material name="clear" >
+          <color rgba="0.8 0.8 0.8 0.1" />
+        </material>
+    </visual>
+
   </link>
+
 
   <!-- Right Wheel -->
   <link name="right_wheel">
@@ -48,7 +88,7 @@
   <joint name="joint_right_wheel" type="continuous">
     <parent link="base_link"/>
     <child link="right_wheel"/>
-    <origin xyz="0.020 -0.058 -0.035" rpy="0 0 0" /> 
+    <origin xyz="0.020 -0.058 0.0325" rpy="0 0 0" /> 
     <axis xyz="0 1 0" />
   </joint>
 
@@ -66,7 +106,7 @@
   <joint name="joint_left_wheel" type="continuous">
     <parent link="base_link"/>
     <child link="left_wheel"/>
-    <origin xyz="0.020 0.058 -0.035" rpy="0 0 0" /> 
+    <origin xyz="0.020 0.058 0.0325" rpy="0 0 0" /> 
     <axis xyz="0 1 0" />
   </joint>
 
@@ -77,16 +117,38 @@
       <geometry>
         <box size="0.002 0.035 0.023" />
       </geometry>
-      <material name="red" />
+      <material name="red" >
+        <color rgba="1.0 0.0 0.0 0.5" />
+      </material>
     </visual>
   </link>
 
   <joint name="joint_distance_sensor" type="revolute" >
     <parent link="base_link" />
     <child link="distance_sensor" />
-    <origin xyz="0.095 0.0 0.100" rpy="0 0 0" />
+    <origin xyz="0.11 0.0 0.140" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <limit effort="30" velocity="1.0" lower="-0.785398163394" upper="0.785398163394" />
   </joint>
+
+  <!-- LIDAR -->
+  <link name="laser_frame">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <cylinder length="0.020" radius="0.0325" />
+      </geometry>
+      <material name="blue" >
+        <color rgba="0 0 1 0.85" />
+      </material>
+    </visual>
+  </link>
+  
+  <joint name="joint_ydlidar" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_frame"/>
+    <origin xyz="0 0 0.200" rpy="0 0 0" /> 
+  </joint>
+  
 
 </robot>
