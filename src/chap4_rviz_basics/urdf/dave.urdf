@@ -172,7 +172,7 @@
   <joint name="joint_distance_sensor" type="revolute" >
     <parent link="base_link" />
     <child link="distance_sensor" />
-    <origin xyz="0.081 0.0 0.140" rpy="0 0 0" />
+    <origin xyz="0.080 0.0 0.125" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <limit effort="30" velocity="1.0" lower="-0.785398163394" upper="0.785398163394" />
   </joint>
