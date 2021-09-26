@@ -30,19 +30,25 @@ The node assumes the IMU is oriented:
   - Y is toward left side
   - Z is up
 
-To install the imu4gopigo3ros package:
-$ sudo pip3 install imu4gopigo3ros
+For Python2 install the imu4gopigo3ros package:
+$ sudo pip install imu4gopigo3ros
+
+For Python3 install the imu4gopigo3ros2 package:
+$ sudo pip install imu4gopigo3ros2
 
 To test IMU access:
 $ startIMU
 $ readIMU
 
-To remove the imu4gopigo3ros package:
-$ sudo pip3 uninstall imu4gopigo3ros
+To remove the Python2 imu4gopigo3ros package:
+$ sudo pip uninstall imu4gopigo3ros
+
+To remove the Python3 imu4gopigo3ros2 package:
+$ sudo pip3 uninstall imu4gopigo3ros2
 
 Publishes:
    /imu/data
-   /imu/mag
+   /imu/mag  magnetic_field in unit of full Tesla 
    /temp
 TODO:
    /imu/status
